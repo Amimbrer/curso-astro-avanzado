@@ -1,0 +1,39 @@
+:root {
+    --dark-blue: #10151D;
+    --soft-white: rgb(191 199 210/1);
+    --extra-soft-white: rgb(40 60 81 / 1) --soft-light: rgb(22 30 41 / 1)
+}
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    font-family: "Public Sans Variable", sans-serif;
+    background-color: var(--dark-blue);
+    color: white;
+    padding: 20px;
+}
+
+img,
+video {
+    max-width: 100%;
+    height: auto;
+}
+
+img,
+svg,
+video,
+canvas,
+audio,
+iframe,
+embed,
+object {
+    display: block;
+}
+
+a {
+    text-decoration: none;
+}

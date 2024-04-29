@@ -1,0 +1,110 @@
+---
+import { getCollection } from "astro:content";
+import MainLayout from "@/layouts/MainLayout.astro";
+const posts = (await getCollection("blog")).sort(
+    (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime(),
+);
+console.log("hola2", posts.length);
+---
+
+<MainLayout title="Blog">
+    <h1>Estás en el blog</h1>
+    <div class="tarjeta-contenedor">
+        <a class="tarjeta__btn-volver" href="/blog">
+            <svg
+                viewBox="0 -960 960 960"
+                xmlns="http://www.w3.org/2000/svg"
+                height="20"
+                width="20"
+                ><path
+                    d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z"
+                    fill="#BFC7D2"></path></svg
+            >
+
+            Back to blog
+        </a>
+        <ul class="tarjeta">
+            {
+                posts.map((post) => (
+                    <li class="tarjeta__contenido">
+                        <article>
+                            <img
+                                class="tarjeta__contenido__imagen"
+                                width="1020"
+                                height="520"
+                                src={post.data.heroImage}
+                                alt=""
+                            />
+
+                            <div class="tarjeta__contenido__texto">
+                                <time
+                                    datetime={post.data.pubDate.toISOString()}>
+                                    {post.data.pubDate.toLocaleDateString(
+                                        "es-es",
+                                        {
+                                            year: "numeric",
+                                            month: "short",
+                                            day: "2-digit",
+                                        },
+                                    )}
+                                </time>
+
+                                <h1>{post.data.title}</h1>
+                                {post.data.tags.map((tag) => (
+                                    <p>{tag}</p>
+                                ))}
+                            </div>
+                        </article>
+                    </li>
+                ))
+            }
+        </ul>
+    </div>
+</MainLayout>
+
+<style>
+    .tarjeta {
+        width: 100%;
+    }
+    .tarjeta-contenedor {
+        width: 100%;
+        max-width: 650px;
+        margin-inline: auto;
+        padding: 10px;
+    }
+    .tarjeta__btn-volver {
+        transition-property: color, background-color, border-color,
+            text-decoration-color, fill, stroke;
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        transition-duration: 200ms;
+        color: rgb(191 199 210 / 1);
+        padding: 0.5rem 1.5rem;
+        border: 1px rgb(46 60 81 / 1) solid;
+        border-radius: 9999px;
+        display: inline-flex;
+        cursor: pointer;
+        gap: 0.5rem;
+        align-items: center;
+    }
+    .tarjeta__contenido {
+        --tw-space-y-reverse: 0;
+        margin-top: calc(1rem * calc(1 - 0));
+        margin-bottom: calc(1rem * 0);
+        border-color: rgb(46 60 81 / 1);
+        border-width: 1px;
+        border-radius: 0.75rem;
+        max-width: none;
+        width: 100%;
+        margin-inline: auto;
+        list-style: none;
+    }
+    .tarjeta__contenido__imagen {
+        object-fit: cover;
+        border-top-left-radius: 0.75rem;
+        border-top-right-radius: 0.75rem;
+        width: 100%;
+    }
+    .tarjeta__contenido__texto {
+        padding: 3rem;
+    }
+</style>
