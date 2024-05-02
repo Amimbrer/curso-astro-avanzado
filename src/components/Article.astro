@@ -1,0 +1,56 @@
+---
+import { type CollectionEntry } from "astro:content";
+import { Image } from "astro:assets";
+import FormattedDate from "@/components/FormattedDate.astro";
+
+// Tipo props que permite obtener la clase del collection sin necesidad de declarar de nuevo los parametros
+type Props = CollectionEntry<"blog">["data"] & { slug: string };
+
+const { heroImage, pubDate, tags, title, slug } = Astro.props;
+---
+
+<li class="tarjeta__contenido" transition:name={title}>
+    <article>
+        <a href=`/blog/${slug}`>
+            <Image
+                class="tarjeta__contenido__imagen"
+                width={1020}
+                height={520}
+                src={heroImage}
+                alt=""
+            />
+
+            <div class="tarjeta__contenido__texto">
+                <FormattedDate date={pubDate} />
+
+                <h1>{title}</h1>
+                {tags.map((tag) => <p>{tag}</p>)}
+            </div>
+        </a>
+    </article>
+</li>
+
+
+<style> 
+    .tarjeta__contenido {
+        --tw-space-y-reverse: 0;
+        margin-top: calc(1rem * calc(1 - 0));
+        margin-bottom: calc(1rem * 0);
+        border-color: rgb(46 60 81 / 1);
+        border-width: 1px;
+        border-radius: 0.75rem;
+        max-width: none;
+        width: 100%;
+        margin-inline: auto;
+        list-style: none;
+    }
+    .tarjeta__contenido__imagen {
+        object-fit: cover;
+        border-top-left-radius: 0.75rem;
+        border-top-right-radius: 0.75rem;
+        width: 100%;
+    }
+    .tarjeta__contenido__texto {
+        padding: 3rem;
+    }
+</style>

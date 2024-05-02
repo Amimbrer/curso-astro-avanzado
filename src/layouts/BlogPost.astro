@@ -1,0 +1,90 @@
+---
+import MainLayout from "./MainLayout.astro";
+import { type CollectionEntry } from "astro:content";
+
+type Props = CollectionEntry<"blog">["data"];
+
+const { title, heroImage } = Astro.props;
+---
+
+<MainLayout title={title}>
+    <div class="tarjeta-contenedor" transition:name={title}>
+        <a class="tarjeta__btn-volver" href="/blog">
+            <svg
+                viewBox="0 -960 960 960"
+                xmlns="http://www.w3.org/2000/svg"
+                height="20"
+                width="20"
+                ><path
+                    d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z"
+                    fill="#BFC7D2"></path></svg
+            >
+
+            Back to blog
+        </a>
+        <ul class="tarjeta">
+            <li class="tarjeta__contenido">
+                <article>
+                    <img
+                        class="tarjeta__contenido__imagen"
+                        width="1020"
+                        height="520"
+                        src={heroImage}
+                        alt=""
+                    />
+
+                    <div class="tarjeta__contenido__texto">
+                        <slot />
+                    </div>
+                </article>
+            </li>
+        </ul>
+    </div>
+</MainLayout>
+
+<style>
+    .tarjeta {
+        width: 100%;
+    }
+    .tarjeta-contenedor {
+        width: 100%;
+        margin-inline: auto;
+        padding: 10px;
+        max-width: 750px;
+    }
+    .tarjeta__btn-volver {
+        transition-property: color, background-color, border-color,
+            text-decoration-color, fill, stroke;
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        transition-duration: 200ms;
+        color: rgb(191 199 210 / 1);
+        padding: 0.5rem 1.5rem;
+        border: 1px rgb(46 60 81 / 1) solid;
+        border-radius: 9999px;
+        display: inline-flex;
+        cursor: pointer;
+        gap: 0.5rem;
+        align-items: center;
+    }
+    .tarjeta__contenido {
+        --tw-space-y-reverse: 0;
+        margin-top: calc(1rem * calc(1 - 0));
+        margin-bottom: calc(1rem * 0);
+        border-color: rgb(46 60 81 / 1);
+        border-width: 1px;
+        border-radius: 0.75rem;
+        max-width: none;
+        width: 100%;
+        margin-inline: auto;
+        list-style: none;
+    }
+    .tarjeta__contenido__imagen {
+        object-fit: cover;
+        border-top-left-radius: 0.75rem;
+        border-top-right-radius: 0.75rem;
+        width: 100%;
+    }
+    .tarjeta__contenido__texto {
+        padding: 3rem;
+    }
+</style>
